@@ -15,3 +15,5 @@ with a double click or open containing folder ( button )
 specify starting directory for your files in config file. Search is done recursive.
 
 Text files should be in latin encoding ( will be converted to utf-8 for processing after reading )
+
+![Alt text](/scr1.jpg?raw=true "screenshot 1")
