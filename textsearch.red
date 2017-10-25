@@ -12,6 +12,7 @@ _dbg: false ;; set to true to show console / errors
 
 hits: 0
 idir: ieditor: "" 
+gfrule: []  ;; global file parse rule
 
 ;; init values from config 
 if exists? %textsearch.cfg [
@@ -58,7 +59,7 @@ suchdir: func ["search directory for files"
 change-dir dir
 foreach ele read %. [
   either dir? ele [  suchdir clean-path ele  ][
-        if (suffix? ele) = (suffix? to-file ffilt/data) [ fsuch clean-path ele]
+      if parse to-string ele gfrule [ fsuch clean-path ele]
   ]
 ]
 change-dir %..
@@ -73,6 +74,7 @@ unless (dir? d) [print "nee" return 0]
 hits: 0
 clear tl1/data 
 meld/data: "searching..." 
+gfrule: _make-rule ffilt/text
 suchdir d
 either hits > 0 [
  meld/data: reduce [hits " Hits found (Dbl-Click to open editor)"]
@@ -82,7 +84,7 @@ either hits > 0 [
 
 ]
 ;;-------------------------------------
-get-file: func ["extract file name form selected line"
+get-file: func ["extract file name from selected line"
 ;;-------------------------------------
  ][
 
